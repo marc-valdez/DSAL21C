@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+# Microsoft Office Files
+*.docx
+*.vsdx
