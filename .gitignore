@@ -38,3 +38,6 @@
 # Microsoft Office Files
 *.docx
 *.vsdx
+
+# Text Files
+*.txt
