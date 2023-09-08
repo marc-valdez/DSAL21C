@@ -39,5 +39,6 @@
 *.docx
 *.vsdx
 
-# Text Files
+# Misc Files
 *.txt
+*.png
