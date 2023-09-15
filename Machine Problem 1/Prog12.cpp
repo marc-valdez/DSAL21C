@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-    char symbol = 0;
+    char symbol = ' ';
     cout << "Please enter a symbol (ex. #): ";
     cin >> symbol;
 
