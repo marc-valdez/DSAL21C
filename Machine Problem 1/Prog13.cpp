@@ -16,14 +16,7 @@ int main()
     cout << "Please enter your monthly salary: ";
     cin >> salary;
 
-    if(salary < 15000)
-    {
-        bonus = salary * 0.25;
-    }
-    else
-    {
-        bonus = 5500.0;
-    }
+    salary < 15000 ? bonus = salary * 0.25 : bonus = 5500.0;
 
     cout << "Your name is: " << name << endl;
     cout << "Your bonus is: PHP " << bonus << endl;
