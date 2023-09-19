@@ -42,3 +42,6 @@
 # Misc Files
 *.txt
 *.png
+
+# Ignore Output Folders
+*/output
