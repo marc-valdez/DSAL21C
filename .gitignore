@@ -43,5 +43,6 @@
 *.txt
 *.png
 
-# Ignore Output Folders
+# Ignore Folders
 */output
+.vscode
