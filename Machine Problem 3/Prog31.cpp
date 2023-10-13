@@ -6,7 +6,7 @@
 #include "dependency.hpp"
 using namespace std;
 
-typedef struct {
+typedef struct Student {
     string name;
     GWA gwa = GWA(0.0);
 } Student;
@@ -21,6 +21,7 @@ int main()
             cout << "Please enter your name: ";
             cin >> students[i].name;
             students[i].gwa.setGWA("Please enter your GWA: ", 1.0, 5.0);
+            cout << endl;
         }
 
         // Ascending Sort
