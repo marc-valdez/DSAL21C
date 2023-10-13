@@ -8,7 +8,7 @@ using namespace std;
 
 typedef struct {
     string name;
-    float general_weighted_average;
+    GWA gwa = GWA(0.0);
 } Student;
 
 #define MAX 3
@@ -20,14 +20,13 @@ int main()
         for(int i = 0; i < MAX; i++) {
             cout << "Please enter your name: ";
             cin >> students[i].name;
-            cout << "Please enter your GWA: ";
-            cin >> students[i].general_weighted_average;
+            students[i].gwa.setGWA("Please enter your GWA: ", 1.0, 5.0);
         }
 
-        // Ascending
+        // Ascending Sort
         for (int i = 0; i < MAX; i++) {
             for (int j = i + 1; j < MAX; j++) {
-                if (students[i].general_weighted_average > students[j].general_weighted_average) {
+                if(students[i].gwa.getGWA() > students[j].gwa.getGWA()) {
                     Student temp = students[i];
                     students[i] = students[j];
                     students[j] = temp;
@@ -35,9 +34,9 @@ int main()
             }
         }
 
-        cout << "The sorted list is: " << endl;
+        cout << "\nThe sorted list is: \n\n";
         for(int i = 0; i < MAX; i++) {
-            cout << students[i].name << " " << fixed << setprecision(2) << students[i].general_weighted_average << endl;
+            cout << students[i].name << "\t: " << fixed << setprecision(2) << students[i].gwa.getGWA() << endl;
         }
     } while(tryAgain("\nDo you want to try again? (y/n): "));
     return 0;
