@@ -8,7 +8,35 @@ using namespace std;
 int main()
 {
     do {
+        char threeDArray[3][3][3] = {
+            {
+                {'A', 'B', 'C'},
+                {'D', 'E', 'F'},
+                {'G', 'H', 'I'}
+            },
+            {
+                {'J', 'K', 'L'},
+                {'M', 'N', 'O'},
+                {'P', 'Q', 'R'}
+            },
+            {
+                {'S', 'T', 'U'},
+                {'V', 'W', 'X'},
+                {'Y', 'Z', '!'}
+            }
+        };
 
+        for(int i = 0; i < 3; i++) {
+            cout << "Tbl" << i + 1 << "\t0\t1\t2\n\n";
+            for(int j = 0; j < 3; j++) {
+                cout << j << "\t";
+                for(int k = 0; k < 3; k++) {
+                    cout << threeDArray[i][j][k] << "\t";
+                }
+                cout << endl;
+            }
+            cout << endl;
+        }
     } while(tryAgain("\nDo you want to try again? (y/n): "));
     return 0;
 }
