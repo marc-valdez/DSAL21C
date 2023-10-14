@@ -17,9 +17,10 @@ int main()
     Student students[MAX];
     do {
         for(int i = 0; i < MAX; i++) {
-            cout << "Please enter your name: ";
+            cout << "[" << i + 1 << "] Please enter your name: ";
             cin >> students[i].name;
-            students[i].gwa.setGWA("Please enter your GWA: ", 1.0, 5.0);
+            cout << "[" << to_string(i + 1) << "] ";
+            students[i].gwa.setGWA("Please enter your last semester's GWA: ", 1.0, 5.0);
             cout << endl;
         }
 

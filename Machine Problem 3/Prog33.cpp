@@ -27,9 +27,9 @@ int main()
         };
 
         for(int i = 0; i < 3; i++) {
-            cout << "Tbl" << i + 1 << "\t0\t1\t2\n\n";
+            cout << "Tbl_" << i + 1 << "\t[0]\t[1]\t[2]\n\n";
             for(int j = 0; j < 3; j++) {
-                cout << j << "\t";
+                cout << "[" << j << "]\t";
                 for(int k = 0; k < 3; k++) {
                     cout << threeDArray[i][j][k] << "\t";
                 }
