@@ -7,6 +7,23 @@ using namespace std;
 
 int main()
 {
-    
+    int myArray[10];
+    int *myPtr;
+
+    for(int i = 0; i < 10; i++)
+    {
+        cout << "[" << i << "] Please enter an integer : ";
+        cin >> myArray[i];
+    }
+
+    cout << endl;
+
+    cout << "    Values\t|\tMemory Address" << endl;
+    for(int i = 0; i < 10; i++)
+    {
+        myPtr = &myArray[i];
+        cout << "[" << i << "] " << myArray[i] << "\t\t|\t" << myPtr << endl;
+    }
+
     return 0;
 }
