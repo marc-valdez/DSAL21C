@@ -142,22 +142,29 @@ public:
 class Menu {
 public:
     short choice;
+    short min, max;
     string titleText;
+    string *choices;
 
-    Menu(string newTitleText = "") {
+    Menu(string newTitleText = "", string *newChoices = nullptr) {
         choice = 0;
+        min = 1;
+
+        for(int i = 0; newChoices[i] != "\0"; i++)
+            max = i + 1;
+
         titleText = newTitleText;
+        choices = newChoices;
     }
 
     void displayMenu() {
         system("cls");
 
         cout << titleText << endl;
-        cout << "[1] ENQUEUE" << endl;
-        cout << "[2] DEQUEUE" << endl;
-        cout << "[3] PEEK" << endl;
-        cout << "[4] DISPLAY" << endl;
-        cout << "[5] EXIT" << endl;
+        for(int i = 0; i < max; i++) {
+            cout << "[" << i + 1 << "] " << choices[i] << endl;
+        }
+
         cout << "Enter your choice: ";
     }
 
@@ -177,10 +184,10 @@ public:
                 continue;
             }
 
-            if(choice >= 1 && choice <= 5)
+            if(choice >= min && choice <= max)
                 return choice;
             else {
-                cout << "! Please enter a number between 1 and 5. ";
+                printf("! Please enter a number between %d and %d. ", min, max);
                 system("pause");
                 continue;
             }
@@ -243,7 +250,15 @@ bool binaryChoice(std::string prompt)
 int main() {
     Queue q(5);
 
-    Menu menu("This is a Queue Simulation Program!");
+    string choices[6] = {
+        "ENQUEUE",
+        "DEQUEUE",
+        "PEEK",
+        "DISPLAY",
+        "EXIT",
+        "\0"
+    };
+    Menu menu("This is a Queue Simulation Program!", choices);
 
     do
     {
