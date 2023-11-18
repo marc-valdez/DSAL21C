@@ -3,6 +3,8 @@
 #include <iostream>
 using namespace std;
 
+#define MAX 10
+
 struct Node {
     double value;
     struct Node *next;
@@ -13,10 +15,12 @@ class Queue {
 public:
     QueuePointer head;
     QueuePointer tail;
+    int size;
     Queue()
     {
         head = NULL;
         tail = NULL;
+        size = 0;
     }
 };
 
@@ -35,8 +39,14 @@ void printQueue(QueuePointer head)
     cout << endl;
 }
 
-void append(QueuePointer &head, QueuePointer &tail, int newValue)
+void append(QueuePointer &head, QueuePointer &tail, int newValue, int &size)
 {
+    if(size >= MAX)
+    {
+        cout << "! Queue overflow. Cannot append further." << endl;
+        exit(1);
+    }
+
     QueuePointer newNode;
     newNode = (QueuePointer)malloc(sizeof(struct Node));
     if(newNode == NULL)
@@ -52,13 +62,15 @@ void append(QueuePointer &head, QueuePointer &tail, int newValue)
     else
         tail->next = newNode;
     tail = newNode;
+
+    size++;
 }
 
-void serve(QueuePointer &head, QueuePointer &tail, int &item)
+void serve(QueuePointer &head, QueuePointer &tail, int &item, int &size)
 {
     QueuePointer temp;
     if(head == NULL)
-        cout << "Queue is empty. Cannot delete further.";
+        cout << "! Queue underflow. Cannot delete further." << endl;
     else
     {
         item = head->value;
@@ -67,6 +79,7 @@ void serve(QueuePointer &head, QueuePointer &tail, int &item)
         if(head == NULL)
             tail = NULL;
         free(temp);
+        size--;
     }
 }
 
@@ -76,7 +89,7 @@ int main()
 
     // Store 1 to 10 inside MyQueue
     for(int i = 1; i <= 10; i++)
-        append(MyQueue.head, MyQueue.tail, i);
+        append(MyQueue.head, MyQueue.tail, i, MyQueue.size);
 
     // Show the available items
     cout << "Available items: ";
@@ -88,7 +101,7 @@ int main()
 
     int items[10] = {0};
     for(int i = 0; i < numItems; i++)
-        serve(MyQueue.head, MyQueue.tail, items[i]);
+        serve(MyQueue.head, MyQueue.tail, items[i], MyQueue.size);
 
     cout << "Queue: ";
     printQueue(MyQueue.head);
