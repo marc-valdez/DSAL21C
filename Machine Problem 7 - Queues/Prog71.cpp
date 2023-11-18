@@ -116,17 +116,25 @@ public:
     void printQueue(string flavorText = "Queue: ") {
         cout << flavorText;
 
+        // Check if the queue is empty.
         if(isEmpty()) {
             cout << "Queue is empty." << endl;
+            // Return early to avoid further execution.
             return;
         }
 
+        // Create a temporary pointer to traverse the queue.
         Node *temp = head;
+
+        // Traverse the queue and print each node's data.
+        // Once nullptr is reached, we've reached the end of the queue.
         while(temp != nullptr) {
             cout << temp->data << " ";
             temp = temp->next;
         }
         cout << endl;
+
+        // Free the temporary pointer.
         delete temp;
     }
 };
