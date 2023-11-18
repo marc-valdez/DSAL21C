@@ -26,7 +26,7 @@ public:
 
     bool isEmpty() {
         return head == nullptr;
-    };
+    }
 
     bool isFull() {
         return size >= maxSize;
@@ -61,12 +61,24 @@ public:
             return false;
         }
 
+        // Create a temporary pointer to store the head pointer.
         Node *temp = head;
-        head = head->next;
-
+        
+        // Optional: Grab the data from temp before deletion.
         item = temp->data;
 
+        // Shift the head pointer to the next node.
+        head = head->next;
+
+        // If the head pointer is NULL, it means we've reached the end of the list.
+        if(head == nullptr) {
+            tail = nullptr;
+        }
+
+        // Free the temporary pointer.
         delete temp;
+
+        // Reduce the size of the queue.
         size--;
 
         return true;
