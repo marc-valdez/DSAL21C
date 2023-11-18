@@ -4,6 +4,33 @@
 #include <string>
 using namespace std;
 
+class Number {
+public:
+    double value;
+
+    Number(double newValue) {
+        value = newValue;
+    }
+
+    void setValue(string prompt) {
+        while(true)
+        {
+            cout << prompt;
+            string input;
+            try {
+                getline(cin, input);
+                value = stod(input);
+                break;
+            }
+            catch(const std::exception &) {
+                cout << "! Invalid input. ";
+                system("pause");
+                continue;
+            }
+        }
+    }
+};
+
 class Node {
 public:
     int data;
@@ -162,59 +189,22 @@ public:
 
         cout << titleText << endl;
         for(int i = 0; i < max; i++) {
-            cout << "[" << i + 1 << "] " << choices[i] << endl;
+            cout << "   [" << i + 1 << "] " << choices[i] << endl;
         }
-
-        cout << "Enter your choice: ";
     }
 
     short getChoice() {
         while(true)
         {
             displayMenu();
-            string input;
 
-            try {
-                getline(cin, input);
-                choice = stoi(input);
-            }
-            catch(const std::exception &) {
-                cout << "! Invalid input. ";
-                system("pause");
-                continue;
-            }
+            Number choice(0);
+            choice.setValue(">> Please enter your choice: ");
 
-            if(choice >= min && choice <= max)
-                return choice;
+            if(choice.value >= min && choice.value <= max)
+                return choice.value;
             else {
                 printf("! Please enter a number between %d and %d. ", min, max);
-                system("pause");
-                continue;
-            }
-        }
-    }
-};
-
-class Number {
-public:
-    double value;
-
-    Number(double newValue) {
-        value = newValue;
-    }
-
-    void setValue(string prompt) {
-        while(true)
-        {
-            cout << prompt;
-            string input;
-            try {
-                getline(cin, input);
-                value = stod(input);
-                break;
-            }
-            catch(const std::exception &) {
-                cout << "! Invalid input. ";
                 system("pause");
                 continue;
             }
@@ -248,7 +238,7 @@ bool binaryChoice(std::string prompt)
 }
 
 int main() {
-    Queue q(5);
+    Queue myQueue(5);
 
     string choices[6] = {
         "ENQUEUE",
@@ -258,7 +248,7 @@ int main() {
         "EXIT",
         "\0"
     };
-    Menu menu("This is a Queue Simulation Program!", choices);
+    Menu menu("-- This is a Queue Simulation Program! --", choices);
 
     do
     {
@@ -269,15 +259,15 @@ int main() {
                 system("cls");
 
                 Number count(0);
-                string prompt = "ENQUEUE\nHow many elements do you wish to add? (max: " + to_string(q.maxSize - q.size) + ") >> ";
+                string prompt = "-- ENQUEUE --\n>> How many elements do you wish to add? (max: " + to_string(myQueue.maxSize - myQueue.size) + "): ";
                 count.setValue(prompt);
 
                 for(int i = 0; i < count.value; i++)
                 {
                     Number num(0);
-                    string prompt = "Enter element " + to_string(i + 1) + " >> ";
+                    string prompt = ">> Enter element " + to_string(i + 1) + ": ";
                     num.setValue(prompt);
-                    if(!q.enqueue(num.value))
+                    if(!myQueue.enqueue(num.value))
                         break;
                 }
                 break;
@@ -287,45 +277,45 @@ int main() {
                 system("cls");
 
                 Number count(0);
-                string prompt = "DEQUEUE\nHow many elements do you wish to remove? (max: " + to_string(q.size) + ") >> ";
+                string prompt = "-- DEQUEUE --\n>> How many elements do you wish to remove? (max: " + to_string(myQueue.size) + "): ";
                 count.setValue(prompt);
 
                 Queue served(count.value);
                 for(int i = 0; i < count.value; i++)
                 {
                     int temp;
-                    if(!q.dequeue(temp))
+                    if(!myQueue.dequeue(temp))
                         break;
                     served.enqueue(temp);
                 }
-                served.printQueue("Served Items: ");
-                q.printQueue("Remaining Items: ");
+                served.printQueue("<< Served Items: ");
+                myQueue.printQueue("<< Remaining Items: ");
                 break;
             }
             case 3:
             {
                 system("cls");
-                cout << "PEEK" << endl;
-                cout << "Head: " << q.peek() << endl;
+                cout << "-- PEEK --" << endl;
+                cout << "<< Head: " << myQueue.peek() << endl;
                 break;
             }
             case 4:
             {
                 system("cls");
-                q.printQueue("DISPLAY\n");
+                myQueue.printQueue("-- DISPLAY --\n<< Queue: ");
                 break;
             }
             case 5:
             {
                 system("cls");
-                cout << "EXIT" << endl;
-                if(binaryChoice("Are you sure you want to exit? (y/n) >> "))
+                cout << "-- EXIT --" << endl;
+                if(binaryChoice(">> Are you sure you want to exit? (y/n): "))
                     return 0;
                 else
                     continue;
             }
         }
-    } while(binaryChoice("Do you want to try again? (y/n) >> "));
+    } while(binaryChoice(">> Do you want to try again? (y/n): "));
 
     return 0;
 }
