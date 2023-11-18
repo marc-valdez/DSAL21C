@@ -29,7 +29,7 @@ public:
     {
         if(head == NULL)
         {
-            cout << "! Queue is empty." << endl;
+            cout << "Queue is empty." << endl;
             return;
         }
 
@@ -73,7 +73,7 @@ public:
         QueuePointer temp;
         if(head == NULL)
         {
-            cout << "! Queue is empty. Cannot delete further." << endl;
+            cout << "! Queue underflow. Cannot delete further." << endl;
             return false;
         }
         else
@@ -84,6 +84,7 @@ public:
             if(head == NULL)
                 tail = NULL;
             free(temp);
+            size--;
         }
         return true;
     }
@@ -104,10 +105,12 @@ int main()
         MyQueue.printQueue();
 
         int choice = 0;
+        cout << endl;
         cout << "[1] Append" << endl;
         cout << "[2] Serve" << endl;
         cout << "What would you like to do? >> ";
         cin >> choice;
+        cout << endl;
 
         switch(choice)
         {
@@ -145,6 +148,7 @@ int main()
 
         cout << "Queue: ";
         MyQueue.printQueue();
+        cout << endl;
     } while(tryAgain("Would you like to continue? (y/n) >> "));
 
     return 0;
