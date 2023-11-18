@@ -1,7 +1,7 @@
 // Write a C++ program that will declare a QUEUE named MyQueue. Enable the user to select either to APPEND or SERVE an integer to or from the queue.
 
 #include <iostream>
-#include "dependency.hpp"
+#include "TryAgain.hpp"
 using namespace std;
 
 struct Node {
@@ -129,10 +129,10 @@ int main()
                 int items[10] = {0};
                 for(int i = 0; i < numItems; i++)
                 {
-                    if (MyQueue.serve(items[i]))
-                      cout << "Served item: " << items[i] << endl;
+                    if(MyQueue.serve(items[i]))
+                        cout << "Served item: " << items[i] << endl;
                     else
-                      break;
+                        break;
                 }
 
                 cout << "Served items: ";
