@@ -3,6 +3,8 @@
 #include <iostream>
 using namespace std;
 
+#define MAX 5
+
 struct Node {
     double value;
     struct Node *next;
@@ -13,15 +15,25 @@ class Queue {
 public:
     QueuePointer head;
     QueuePointer tail;
-    Queue()
+    int size;
+    int maxSize;
+    Queue(int newMax)
     {
         head = NULL;
         tail = NULL;
+        size = 0;
+        maxSize = newMax;
     }
 };
 
-void append(QueuePointer &head, QueuePointer &tail, int newValue)
+void append(QueuePointer &head, QueuePointer &tail, int newValue, int &size)
 {
+    if(size >= MAX)
+    {
+        cout << "! Queue overflow. Cannot append further." << endl;
+        exit(1);
+    }
+
     QueuePointer newNode;
     newNode = (QueuePointer)malloc(sizeof(struct Node));
     if(newNode == NULL)
@@ -37,6 +49,8 @@ void append(QueuePointer &head, QueuePointer &tail, int newValue)
     else
         tail->next = newNode;
     tail = newNode;
+
+    size++;
 }
 
 void printQueue(QueuePointer head)
@@ -51,7 +65,7 @@ void printQueue(QueuePointer head)
 
 int main()
 {
-    Queue MyQueue;
+    Queue MyQueue(10);
 
     while(true)
     {
@@ -61,11 +75,15 @@ int main()
         if(newValue == -1)
             break;
 
-        append(MyQueue.head, MyQueue.tail, newValue);
+        append(MyQueue.head, MyQueue.tail, newValue, MyQueue.size);
+        cout << "Queue: ";
+        printQueue(MyQueue.head);
+        cout << endl;
     }
 
     cout << "Queue: ";
     printQueue(MyQueue.head);
+    cout << endl;
 
     return 0;
 }
