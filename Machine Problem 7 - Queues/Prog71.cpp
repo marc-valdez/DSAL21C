@@ -8,6 +8,11 @@ class Node {
 public:
     int data;
     Node *next;
+
+    Node(int newData) {
+        data = newData;
+        next = nullptr;
+    }
 };
 
 class Queue {
@@ -33,37 +38,53 @@ public:
     }
 
     bool enqueue(int newValue) {
+        // Check if the queue is full.
         if(isFull()) {
             cout << "! Queue overflow. Cannot append further." << endl;
+            // Return false to stop further execution.
             return false;
         }
 
-        Node *newNode = new Node();
-        newNode->data = newValue;
-        newNode->next = nullptr;
+        // Create a new node, with the given value.
+        Node *newNode = new Node(newValue);
 
+        // Check if the new node was successfully created.
+        if(newNode == nullptr) {
+            cout << "! Out of memory." << endl;
+            // Exit the program with an error code.
+            exit(1);
+        }
+
+        // If the queue is empty, set head to the new node.
         if(isEmpty()) {
             head = newNode;
-            tail = newNode;
         }
+        // Otherwise, set the next pointer of the current tail to the new node.
         else {
             tail->next = newNode;
-            tail = newNode;
         }
+
+        // Update the tail to point to the new node.
+        tail = newNode;
+
+        // Increase the size of the queue.
         size++;
 
+        // Return true to indicate success.
         return true;
     }
 
     bool dequeue(int &item) {
+        // Check if the queue is empty.
         if(isEmpty()) {
             cout << "! Queue underflow. Cannot delete further." << endl;
+            // Return false to stop further execution.
             return false;
         }
 
         // Create a temporary pointer to store the head pointer.
         Node *temp = head;
-        
+
         // Optional: Grab the data from temp before deletion.
         item = temp->data;
 
@@ -81,6 +102,7 @@ public:
         // Reduce the size of the queue.
         size--;
 
+        // Return true to indicate success.
         return true;
     }
 
@@ -254,6 +276,7 @@ int main() {
                     served.enqueue(temp);
                 }
                 served.printQueue("Served Items: ");
+                q.printQueue("Remaining Items: ");
                 break;
             }
             case 3:
