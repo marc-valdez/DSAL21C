@@ -29,7 +29,7 @@ public:
     {
         if(head == NULL)
         {
-            cout << "Queue is empty." << endl;
+            cout << "! Queue is empty." << endl;
             return;
         }
 
@@ -73,7 +73,7 @@ public:
         QueuePointer temp;
         if(head == NULL)
         {
-            cout << "Queue is empty. Cannot delete further." << endl;
+            cout << "! Queue is empty. Cannot delete further." << endl;
             return false;
         }
         else
@@ -126,23 +126,20 @@ int main()
                 cout << "How many items would you like served? >> ";
                 cin >> numItems;
 
-                int items[10] = {0};
+                Queue items(numItems);
                 for(int i = 0; i < numItems; i++)
                 {
-                    if(MyQueue.serve(items[i]))
-                        cout << "Served item: " << items[i] << endl;
-                    else
-                        break;
+                    int item = 0;
+                    if(!MyQueue.serve(item)) { break; }
+                    items.append(item);
                 }
 
                 cout << "Served items: ";
-                for(int i = 0; i < numItems; i++)
-                    cout << items[i] << " ";
-                cout << endl;
+                items.printQueue();
                 break;
             }
             default:
-                cout << "Invalid choice." << endl;
+                cout << "! Invalid choice. Please try again." << endl;
                 break;
         }
 
