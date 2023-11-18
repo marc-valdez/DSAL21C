@@ -4,8 +4,6 @@
 #include "dependency.hpp"
 using namespace std;
 
-#define MAX 10
-
 struct Node {
     double value;
     struct Node *next;
@@ -16,80 +14,94 @@ class Queue {
 public:
     QueuePointer head;
     QueuePointer tail;
-    Queue()
+    int size;
+    int maxSize;
+
+    Queue(int newMax)
     {
         head = NULL;
         tail = NULL;
+        size = 0;
+        maxSize = newMax;
+    }
+
+    void printQueue()
+    {
+        if(head == NULL)
+        {
+            cout << "Queue is empty." << endl;
+            return;
+        }
+
+        QueuePointer temp = head; // Introduce a temporary pointer variable
+        while(temp != NULL)
+        {
+            cout << temp->value << " ";
+            temp = temp->next; // Move the temporary pointer to the next node
+        }
+        cout << endl;
+    }
+
+    void append(int newValue)
+    {
+        if(size >= maxSize)
+        {
+            cout << "! Queue overflow. Cannot append further." << endl;
+            return;
+        }
+
+        QueuePointer newNode = (QueuePointer)malloc(sizeof(struct Node));
+        if(newNode == NULL)
+        {
+            cout << "! Out of memory." << endl;
+            exit(0);
+        }
+
+        newNode->value = newValue;
+        newNode->next = NULL;
+        if(tail == NULL)
+            head = newNode;
+        else
+            tail->next = newNode;
+        tail = newNode;
+
+        size++;
+    }
+
+    bool serve(int &item)
+    {
+        QueuePointer temp;
+        if(head == NULL)
+        {
+            cout << "Queue is empty. Cannot delete further." << endl;
+            return false;
+        }
+        else
+        {
+            item = head->value;
+            temp = head;
+            head = head->next;
+            if(head == NULL)
+                tail = NULL;
+            free(temp);
+        }
+        return true;
     }
 };
 
-void printQueue(QueuePointer head)
-{
-    if(head == NULL)
-    {
-        cout << "Queue is empty." << endl;
-        return;
-    }
-    while(head != NULL)
-    {
-        cout << head->value << " ";
-        head = head->next;
-    }
-    cout << endl;
-}
-
-void append(QueuePointer &head, QueuePointer &tail, int newValue)
-{
-    QueuePointer newNode;
-    newNode = (QueuePointer)malloc(sizeof(struct Node));
-    if(newNode == NULL)
-    {
-        cout << "! Out of memory." << endl;
-        exit(0);
-    }
-
-    newNode->value = newValue;
-    newNode->next = NULL;
-    if(tail == NULL)
-        head = newNode;
-    else
-        tail->next = newNode;
-    tail = newNode;
-}
-
-int serve(QueuePointer &head, QueuePointer &tail, int &item)
-{
-    QueuePointer temp;
-    if(head == NULL)
-    {
-        cout << "Queue is empty. Cannot delete further." << endl;
-        return 1;
-    }
-    else
-    {
-        item = head->value;
-        temp = head;
-        head = head->next;
-        if(head == NULL)
-            tail = NULL;
-        free(temp);
-    }
-    return 0;
-}
-
 int main()
 {
-    Queue MyQueue;
+    Queue MyQueue(10);
 
-    // Store 1 to 10 inside MyQueue
-    for(int i = 1; i <= 10; i++)
-        append(MyQueue.head, MyQueue.tail, i);
+    // Store 1 to 9 inside MyQueue
+    for(int i = 1; i <= 9; i++)
+        MyQueue.append(i);
 
     do
     {
         // Show the available items
         cout << "Available items: ";
-        printQueue(MyQueue.head);
+        MyQueue.printQueue();
 
         int choice = 0;
         cout << "[1] Append" << endl;
@@ -105,7 +117,7 @@ int main()
                 cout << "What value would you like to append? >> ";
                 cin >> newValue;
 
-                append(MyQueue.head, MyQueue.tail, newValue);
+                MyQueue.append(newValue);
                 break;
             }
             case 2:
@@ -115,9 +127,12 @@ int main()
                 cin >> numItems;
 
                 int items[10] = {0};
-                for(int i = 0, errorCheck = 0; (i < numItems && errorCheck == 0); i++)
+                for(int i = 0; i < numItems; i++)
                 {
-                    errorCheck = serve(MyQueue.head, MyQueue.tail, items[i]);
+                    if (MyQueue.serve(items[i]))
+                      cout << "Served item: " << items[i] << endl;
+                    else
+                      break;
                 }
 
                 cout << "Served items: ";
@@ -132,7 +147,7 @@ int main()
         }
 
         cout << "Queue: ";
-        printQueue(MyQueue.head);
+        MyQueue.printQueue();
     } while(tryAgain("Would you like to continue? (y/n) >> "));
 
     return 0;
