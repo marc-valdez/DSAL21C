@@ -16,13 +16,11 @@ public:
     QueuePointer head;
     QueuePointer tail;
     int size;
-    int maxSize;
-    Queue(int newMax)
+    Queue()
     {
         head = NULL;
         tail = NULL;
         size = 0;
-        maxSize = newMax;
     }
 };
 
@@ -65,7 +63,7 @@ void printQueue(QueuePointer head)
 
 int main()
 {
-    Queue MyQueue(10);
+    Queue MyQueue;
 
     while(true)
     {
