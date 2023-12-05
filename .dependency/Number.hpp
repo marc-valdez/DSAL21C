@@ -1,11 +1,11 @@
 #include <iostream>
 #include <string>
 
-class Double {
+class Number {
 private:
     double number;
 public:
-    Double(double number) {
+    Number(double number = 0.0) {
         this->number = number;
     }
     double getNumber() {
