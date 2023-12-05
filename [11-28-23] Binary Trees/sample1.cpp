@@ -77,5 +77,6 @@ int main()
     root->insert(9);
 
     root->printInOrder();
+    delete root;
     return 0;
 }
