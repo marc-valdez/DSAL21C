@@ -56,7 +56,7 @@ int main() {
     do {
         Number integers[MAX];
 
-        cout << "Please enter five integers.\n";
+        cout << "Please enter five integers in order (can be ascending or descending).\n";
         for(int i = 0; i < MAX; i++) {
             string prompt = "Integer " + to_string(i + 1) + ": ";
             integers[i].setNumber(prompt.c_str());
